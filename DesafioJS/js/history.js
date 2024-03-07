@@ -1,8 +1,3 @@
-// const getLocalStorage = () =>
-// JSON.parse(localStorage.getItem("db_compra")) ?? [];
-// const setLocalStorage = (dbCompra) =>
-//   localStorage.setItem("db_compra", JSON.stringify(dbCompra));
-
 const readCompra = async () => {
   const response = await fetch("http://localhost/routes/orders.php");
   const data = await response.json();

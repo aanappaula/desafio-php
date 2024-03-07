@@ -21,24 +21,6 @@ async function getCategories() {
  
 getCategories();
 
-// const getLocalStorage = () =>
-//   JSON.parse(localStorage.getItem("db_product")) ?? [];
-// const setLocalStorage = (dbProduct) =>
-//   localStorage.setItem("db_product", JSON.stringify(dbProduct));
-
-// const deleteProduct = (index) => {
-//   const dbProduct = readProduct();
-//   dbProduct.splice(index, 1);
-//   setLocalStorage(dbProduct);
-// };
-
-// const updateProduct = (index, product) => {
-//   const dbProduct = readProduct();
-//   dbProduct[index] = product;
-//   setLocalStorage(dbProduct);
-// };
-
-
 function createProduct() {
   productForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -55,28 +37,8 @@ function createProduct() {
     } catch (error) {
       console.log("não foi possível adicionar");
     }
-
-    // if (category) {
-    //   const newProduct = {
-    //     ...product,
-    //     tax: category.tax,
-    //     categories: category.name,
-    //   };
-
-    //   dbProduct.push(newProduct);
-    //   setLocalStorage(dbProduct);
-    // }
   });
 }
-
-// const dbProduct = getLocalStorage();
-// const categories = JSON.parse(localStorage.getItem("db_category")) ?? [];
-
-// const productCategoryCode = product.categories;
-
-// const category = categories.find((c) => {
-//   return String(c.code) === String(productCategoryCode);
-// });
 
 const isValidFields = () => {
   return document.getElementById("form").reportValidity();
@@ -87,56 +49,6 @@ const clearFields = () => {
   fields.forEach((field) => (field.value = ""));
 };
 
-// const saveProduct = () => {
-//   if (isValidFields() && checkChar()) {
-//     const code = Math.floor(Math.random() * 1000) + 1;
-//     const product = {
-//       code: code,
-//       nome: document.getElementById("nome").value,
-//       amount: document.getElementById("amount").value,
-//       unitPrice: document.getElementById("unitPrice").value,
-//       categories: document.getElementById("selectCategories").value,
-//     };
-//     createProduct(product);
-//     updateTable();
-//     clearFields();
-//   }
-// };
-
-// function checkChar() {
-//   const inputElement = document.getElementById("nome");
-//   const char = inputElement.value.trim();
-
-//   const pattern = /^[a-zA-Z0-9\s]*$/; // Apenas letras, números e espaços
-
-//   if (!pattern.test(char)) {
-//     alert("O nome do produto não pode conter caracteres especiais.");
-//     return false;
-//   }
-
-//   return true;
-// }
-
-// window.onload = function () {
-//   document
-//     .getElementById("amount")
-//     .addEventListener("keydown", function (event) {
-//       if (!Math.sign(event.key)) {
-//         event.preventDefault();
-//       }
-//     });
-//   document
-//     .getElementById("unitPrice")
-//     .addEventListener("keydown", function (event) {
-//       if (!Math.sign(event.key)) {
-//         event.preventDefault();
-//       }
-//     });
-// };
-
-// function filter(nome) {
-//   return nome.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-// }
 
 const createRow = (product, index) => {
   const newRow = document.createElement("tr");
@@ -175,8 +87,3 @@ const deletarProduct = async (id) => {
 
 
 updateTable();
-
-// document.getElementById("salvar").addEventListener("click", saveProduct);
-// document
-//   .querySelector("#tableProduct>tbody")
-//   .addEventListener("click", deletarProduct);

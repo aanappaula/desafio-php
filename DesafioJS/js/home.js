@@ -1,12 +1,3 @@
-// function filter(nome) {
-//   return nome.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-// }
-
-// const getLocalStorage = () =>
-//   JSON.parse(localStorage.getItem("db_compra")) ?? [];
-// const setLocalStorage = (dbCompra) =>
-//   localStorage.setItem("db_compra", JSON.stringify(dbCompra));
-
 const selectElement = document.getElementById("selectProducts");
 selectElement.innerHTML = "<option disabled>Selecione um produto</option>";
 
@@ -20,16 +11,6 @@ async function getProducts() {
 
 getProducts();
 
-// function getProducts () {
-//   var nome = JSON.parse(localStorage.getItem("db_product"));
-
-//   var selectProducts = document.getElementById("selectProducts");
-
-//   nome.forEach((product) => {
-//     console.log(product);
-//     selectProducts.innerHTML += `<option value="${product.code}">${filter(product.nome)}</option>`;
-//   });
-// };
 
 const updateCompra = (index, compra) => {
   const dbCompra = readCompra();
@@ -37,7 +18,6 @@ const updateCompra = (index, compra) => {
   setLocalStorage(dbCompra);
 };
 
-// const readCompra = () => getLocalStorage();
 
 const createCompra = (compra) => {
   const dbCompra = getLocalStorage();
@@ -159,15 +139,6 @@ const saveCompra = async () => {
   }
 };
 
-// const atualizaEstoque = (productName, purschasedAmount) => {
-//   const products = JSON.parse(localStorage.getItem("db_product"));
-//   const productIndex = products.findIndex((p) => p.nome === productName);
-
-//   if (productIndex !== -1) {
-//     products[productIndex].amount -= purschasedAmount;
-//     localStorage.setItem("db_product", JSON.stringify(products));
-//   }
-// };
 
 document.getElementById("finish").addEventListener("click", async (e) => {
   e.preventDefault();
@@ -235,13 +206,6 @@ const showTotal = () => {
 
 const createRow = (compra, index) => {
   const newRow = document.createElement("tr");
-  // const unitPrice = getProductUitPrice(compra.products);
-  // const productTax = getProductTax(compra.products);
-  // const totalTax = (productTax * unitPrice * compra.amount) / 100;
-
-  // const totalPrice = unitPrice * compra.amount;
-  // const totalValue = totalPrice + totalTax;
-  // console.log(totalPrice, totalTax);
 
   newRow.innerHTML = `
           <td>${compra.name}</td>         

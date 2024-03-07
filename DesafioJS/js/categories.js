@@ -1,20 +1,3 @@
-// const getLocalStorage = () =>
-//   JSON.parse(localStorage.getItem("db_category")) ?? [];
-// const setLocalStorage = (dbCategory) =>
-//   localStorage.setItem("db_category", JSON.stringify(dbCategory));
-
-// const deleteCategory = (index) => {
-//   const dbCategory = readCategory();
-//   dbCategory.splice(index, 1);
-//   setLocalStorage(dbCategory);
-// };
-
-// const updateCategory = (index, category) => {
-//   const dbCategory = readCategory();
-//   dbCategory[index] = category;
-//   setLocalStorage(dbCategory);
-// };
-
 const categoryForm = document.getElementById("form");
 
 const readCategory = async () => {
@@ -86,9 +69,6 @@ function checkChar() {
   return true;
 }
 
-// function filter(nome) {
-//   return nome.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-// }
 
 const createRow = (category, index) => {
   const newRow = document.createElement("tr");
