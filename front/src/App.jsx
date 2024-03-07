@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import logo from "./assets/logo.png";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from './components/pages/Home'
+import Category from './components/pages/Category'
+import Product from './components/pages/Product'
+import History from './components/pages/History'
+import Detail from './components/pages/Detail'
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Router>
+        <div className="App">
+          <ul>
+            <li>Home</li>
+            <li>Contato</li>
+          </ul>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/">
+              <Category />
+            </Route>
+            <Route exact path="/">
+              <Product />
+            </Route>
+            <Route exact path="/">
+              <History />
+            </Route>
+            <Route exact path="/">
+              <Detail />
+            </Route>
+          </Switch>
+
+          <img className="logo" src={logo}></img>
+        </div>
+      </Router>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
