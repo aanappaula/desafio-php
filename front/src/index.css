@@ -1,4 +1,4 @@
-:root {
+/* :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
@@ -66,4 +66,72 @@
       background-color: #f9f9f9;
     }
   }
-  
+   */
+.navbar {
+  background-color: rgba(136, 24, 192, 0.929);
+}
+
+.links {
+  color: #1a1a1a;
+}
+
+.inputs {
+  padding: 30px;
+}
+
+.principal {
+  display: flex;
+  width: 100%;
+  padding-top: 30px;
+  padding: 30px;
+
+}
+.direita {
+  width: 50%;
+  padding: 70px;
+  margin: 20px;
+}
+
+.direita2 {
+  width: 80%;
+  padding: 70px;
+  margin: 20px;
+}
+
+.esquerda {
+  margin-top: 90px;
+  width: 60%;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+.esquerda {
+  margin-top: 90px;
+  width: 60%;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+
+.inputSalvar {
+  background-color: rgba(136, 24, 192, 0.929); 
+  width: 100%;
+  height: 40px;
+}
+
+.inputDeletar {
+  background-color: rgba(214, 51, 26, 0.929); ;
+}
+
+.table-hover tbody tr:hover td {
+  background: rgba(237, 207, 251, 0.929); 
+}
+
+.teste {
+  margin: 0 auto;
+  padding-top: 30px;
+}
+
+.tabela {
+  padding-top: 50px;
+}

@@ -1,4 +1,4 @@
-import logo from "./assets/logo.png";
+// import logo from "./assets/logo.png";
 // import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // import Home from './components/pages/Home'
 // import Category from './components/pages/Category'
@@ -10,7 +10,7 @@ import "./App.css";
 function App() {
   return (
     <>
-     <img src={logo}  />
+
     </>
   );
 }
