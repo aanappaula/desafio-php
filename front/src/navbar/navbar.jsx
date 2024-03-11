@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 
 function BasicExample() {
   return (
-    <Navbar  color='danger' className="navBar">
+    <Navbar color='danger' expand="lg"className="navBar">
       <Container>
         <Navbar.Brand className="text-white" href="#home">Suite Store</Navbar.Brand>
         <Navbar.Toggle className="bg-dark" aria-controls="basic-navbar-nav" />

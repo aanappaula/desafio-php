@@ -59,7 +59,7 @@ function checkChar() {
   const inputElement = document.getElementById("nome");
   const char = inputElement.value.trim();
 
-  const pattern = /^[a-zA-Z0-9\s]*$/; // Apenas letras, números e espaços
+  const pattern = /^[a-zA-Z0-9\s]*$/; 
 
   if (!pattern.test(char)) {
     alert("O nome da categoria não pode conter caracteres especiais.");

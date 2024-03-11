@@ -40,7 +40,7 @@ function Product() {
 <Button className="inputSalvar m-3"as="input" type="button" value="Adicionar" />{' '}
         </div>
         <div  className="col-6">
-          <Table className="m-3" bordered hover size="lg"  >
+          <Table className="m-3" bordered hover size="lg" responsive="sm" >
             <thead>
               <tr>
                 <th>Código</th>
