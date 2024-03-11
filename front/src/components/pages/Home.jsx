@@ -1,4 +1,4 @@
-import BasicExample from "../../navbar/navbar";
+import NavBar from "../../navbar/navbar";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 function Home() {
   return (
     <>
-      <BasicExample />
+      <NavBar />
       <div className="teste">
         <div className="teste container justify-content-center row d-flex">
           <div className="col-6">

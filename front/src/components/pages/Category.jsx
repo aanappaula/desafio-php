@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import BasicExample from "../../navbar/navbar";
+import NavBar from "../../navbar/navbar";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-const CategoryForm = () => {
+
+
+const Category = () => {
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState([]);
   const [tax, setTax] = useState([]);
@@ -46,6 +48,7 @@ const saveCategory = (e) => {
       await fetch(`http://localhost/routes/category.php?id=${id}`, {
         method: "DELETE",
       });
+      if(window.confirm('Deseja apagar esse produto?'))
       updateTable();
     } catch (error) {
       console.log("Erro ao excluir categoria", error);
@@ -54,7 +57,7 @@ const saveCategory = (e) => {
  
   return (
     <>
-      <BasicExample />
+      <NavBar />
       <div className="teste">
         <div className="teste container  justify-content-center row d-flex">
           <div className="col-6">
@@ -128,5 +131,5 @@ const saveCategory = (e) => {
     </>
   );
 };
-export default CategoryForm;
+export default Category;
  

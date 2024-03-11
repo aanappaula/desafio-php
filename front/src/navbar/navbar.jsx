@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from "react-router-dom";
 
 
-function BasicExample() {
+function NavBar() {
   return (
     <Navbar color='danger' expand="lg"className="navBar">
       <Container>
@@ -24,7 +24,7 @@ function BasicExample() {
   );
 }
 
-export default BasicExample;
+export default NavBar;
 <style>
     
 </style>

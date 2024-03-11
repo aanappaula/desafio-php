@@ -1,10 +1,10 @@
-import BasicExample from "../../navbar/navbar";
+import NavBar from "../../navbar/navbar";
 import Table from "react-bootstrap/Table";
 
 function Detail() {
   return (
     <>
-    <BasicExample/>
+    <NavBar/>
     <div className="teste container  justify-content-center row d-flex">
       <div className="col-12">
         <Table className="m-3" mt-5 bordered hover size="lg" responsive="sm">
