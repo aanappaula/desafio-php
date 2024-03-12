@@ -12,11 +12,13 @@ const Compra = () => {
   const [values, setValues] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState("");
   const [amount, setAmount] = useState("");
-  const [carrinhoTemporario, setCarrinhoTemporario] = useState([]);
   const [productData, setProductData] = useState({
     price: "",
     tax: "",
   });
+  const [carrinhoTemporario, setCarrinhoTemporario] = useState([]);
+  let sumTax = 0;
+  let sumPrice = 0;
 
   const readCompra = async () => {
     try {
@@ -34,17 +36,17 @@ const Compra = () => {
     const product = dbProduct.find((p) => String(p.code) === selectedProduct);
 
     if (product) {
-      const taxValue = product.tax_value;
+      const taxValue = (product.tax_value) / 100;
       const productPrice = product.price;
 
-      const totalTax = (taxValue * productPrice * amount) / 100;
+      const totalTax = (taxValue * amount) * 100;
       const totalPrice = productPrice * amount;
       setProductData({
         price: totalPrice,
         tax: totalTax,
       });
-
     }
+
   };
 
   useEffect(() => {
@@ -70,33 +72,27 @@ const Compra = () => {
       .then((val) => setValues(val));
   }, []);
 
-  const showTotal = () => {
-    let sumTax = 0;
-    let sumPrice = 0;
-
-    carrinhoTemporario.forEach((compra) => {
-      sumTax += parseFloat(compra.tax);
-      sumPrice += parseFloat(compra.total);
+  function changeTax() {
+    carrinhoTemporario.forEach((item) => {
+      sumTax += item.tax;
     });
+  }
 
-    setProductData({
-      sumTax: sumTax,
-      sumPrice: sumPrice,
-      
+  function changePrice() {
+    carrinhoTemporario.forEach((item) => {
+      sumPrice += item.total;
     });
-    
-  };
-
+  }
 
   const saveCompra = async (e) => {
     e.preventDefault();
     const response = await fetch("http://localhost/routes/product.php");
     const dbProduct = await response.json();
     const product = dbProduct.find((p) => String(p.code) === selectedProduct);
-    const tax_value = product.tax_value;
+    const tax_value = (product.tax_value) / 100;
     const price = product.price;
 
-    const totalTax = (tax_value * price * amount) / 100;
+    const totalTax = (tax_value * amount) * 100;
     const totalPrice = price * amount;
     const totalValue = totalPrice + totalTax;
     const existingProduct = carrinhoTemporario.find(
@@ -114,8 +110,7 @@ const Compra = () => {
           total: totalValue,
         };
 
-        carrinhoTemporario.push(compra);
-        showTotal();
+        setCarrinhoTemporario([...carrinhoTemporario, compra])
       } else {
         alert(
           `Sem estoque suficiente para essa quantidade! Digite um valor menor que ${product.amount}!`
@@ -132,6 +127,9 @@ const Compra = () => {
    setCarrinhoTemporario(newCarrinhoTemporario);
   }
   
+  changePrice();
+  changeTax();
+
   return (
     <>
       <NavBar />
@@ -205,7 +203,7 @@ const Compra = () => {
                 </tr>
               </thead>
               <tbody>
-                {carrinhoTemporario?.map((compra) => (
+                {carrinhoTemporario.map((compra) => (
                   <tr key={compra.code}>
                     <td>{compra.code}</td>
                     <td>{compra.name}</td>
@@ -229,11 +227,28 @@ const Compra = () => {
             </Table>
           </div>
         </div>
-        <div className="teste ms-4">
-          <div className="total col-6 m-5 container justify-content-center">
-            <p value={productData.tax} className="ms-5">Taxa total:</p>
-            <p value={productData.price} className="ms-5">Total do carrinho:</p>
-
+        <div className="totais  ms-5">
+          <div className="total col-2 m-5 container justify-content-center">
+          <input
+                type="text"
+                name=""
+                value={sumTax}
+                id="totaltax"
+                className="form-control mb-3"
+                placeholder="Total Tax"
+                disabled
+                readOnly
+              />
+              <input
+                type="text"
+                name=""
+                value={sumPrice}
+                id="totalprice"
+                className="form-control mb-3"
+                placeholder="Total"
+                disabled
+                readOnly
+              />
             <div className="buttonCarrinho col-8 m-5 mt-5">
               <Button
                 className="inputCancel btn-secondary"

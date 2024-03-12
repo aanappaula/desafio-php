@@ -134,7 +134,13 @@
 
 .teste {
   margin: 0 auto;
-  padding-top: 30px;
+  padding-top: 20px;
+}
+
+.totais {
+  margin: 0 auto;
+  padding-left: 40px;
+
 }
 
 .tabela {
