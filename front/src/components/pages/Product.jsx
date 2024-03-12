@@ -3,60 +3,49 @@ import NavBar from "../../navbar/navbar";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
 
 
 const Product = () => {
   const [products, setProducts] = useState([]);
-  const [name, setName] = useState([]);
-  const [amount, setAmount] = useState([]);
-  const [price, setPrice] = useState([]);
-  const [categories, setCategories] = useState([]);
-    
-  useEffect(() => {
+  const [values, setValues] = useState([]);
+  const [name, setName] = useState("");
+  const [amount, setAmount] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
 
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost/routes/category.php");
-        const data = await response.json();
-        setCategories(data || []); // Use an empty array if data is undefined
-      } catch (error) {
-        console.log("Erro ao carregar categorias", error);
-      }
-    };
-    fetchData();
-    updateTable();
-  }, []);
-   
+
   const readProduct = async () => {
     try {
-      const response = await fetch("http://localhost/routes/product.php");
-      const data = await response.json();
-      return data;
-    } catch(error) {
-      console.log("Erro ao carregar produtos", error);
+      const response = await axios.get("http://localhost/routes/product.php");
+      const data = response.data;
+      setProducts(data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const saveProduct = (e)=> {
+  const saveProduct = (e) => {
     e.preventDefault();
-    let data = new Form()
-    data.append("name", name)
-    data.append("amount", amount)
-    data.append("price", price)
-    data.append("categories", categories);
+    let data = new FormData();
+    data.append("name", name);
+    data.append("amount", amount);
+    data.append("price", price);
+    data.append("category", category);
     fetch("http://localhost/routes/product.php", {
       method: "POST",
-      body: data
-    }); window.location.reload()
-    console.log(products)
+      body: data,
+    }).then(readProduct());
+    window.location.reload()
   };
 
+  useEffect(() => {
+    readProduct();
+    fetch("http://localhost/routes/category.php")
+      .then((data) => data.json())
+      .then((val) => setValues(val));
+  }, []);
 
-
-  const updateTable = async () => {
-    const dbProduct = await readProduct();
-    setProducts(dbProduct);
-  };
 
   const deletarProduct = async (id) => {
     try {
@@ -64,7 +53,7 @@ const Product = () => {
         method: "DELETE",
       });
       if(window.confirm('Deseja apagar esse produto?'))
-      updateTable();
+      window.location.reload()
     } catch (error) {
       console.log("Erro ao deletar produto", error);
     }
@@ -77,16 +66,25 @@ const Product = () => {
         <div className="teste container  justify-content-center row d-flex">
           <div className="col-6">
           <Form onSubmit={saveProduct}>
-          <Form.Select className="inputSelect m-3" value={categories} size="md">
-             {categories.map((category) => 
-             <option  key={category.code}>{category.name}</option>
-  )}
-          </Form.Select>
 
+          <Form.Select
+                className="select w-100 m-3"
+                aria-label="Default select example"
+                value={category}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                }}
+              >
+                <option>Selecione uma categoria</option>
+                {values.map((opts, i) => (
+                  <option key={i} value={opts.code}>
+                    {opts.name}
+                  </option>
+                ))}
+              </Form.Select>
             <Form.Control
               className="m-3"
               id="name"
-
               onChange={(e) => 
               setName(e.target.value)}
               value={name}
@@ -139,7 +137,7 @@ const Product = () => {
                 </tr>
               </thead>
               <tbody>
-              {products.map((product) => (
+              {products?.map((product) => (
                   <tr key={product.code}>
                     <td>{product.code}</td>
                     <td>{product.name}</td>

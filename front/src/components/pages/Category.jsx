@@ -106,7 +106,7 @@ const saveCategory = (e) => {
                 </tr>
               </thead>
               <tbody>
-                {categories.map((category) => (
+                {categories?.map((category) => (
                   <tr key={category.code}>
                     <td>{category.code}</td>
                     <td>{category.name}</td>
