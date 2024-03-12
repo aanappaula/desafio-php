@@ -7,11 +7,12 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 
 const Compra = () => {
-  const [compras, setCompras] = useState("");
+  const [compras, setCompras] = useState([]);
   const [products, setProducts] = useState("");
   const [values, setValues] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState("");
   const [amount, setAmount] = useState("");
+  const [carrinhoTemporario, setCarrinhoTemporario] = useState([]);
   const [productData, setProductData] = useState({
     price: "",
     tax: "",
@@ -27,7 +28,6 @@ const Compra = () => {
     }
   };
 
-
   const showInput = async () => {
     const response = await fetch("http://localhost/routes/product.php");
     const dbProduct = await response.json();
@@ -40,12 +40,12 @@ const Compra = () => {
       const totalTax = (taxValue * productPrice * amount) / 100;
       const totalPrice = productPrice * amount;
       setProductData({
-        price: totalPrice.toFixed(2),
-        tax: totalTax.toFixed(2),
+        price: totalPrice,
+        tax: totalTax,
       });
-  } 
-}
 
+    }
+  };
 
   useEffect(() => {
     readCompra();
@@ -55,7 +55,6 @@ const Compra = () => {
     showInput();
   }, [selectedProduct, amount]);
 
-
   const changeAmount = (event) => {
     setAmount(parseFloat(event.target.value));
   };
@@ -64,20 +63,6 @@ const Compra = () => {
     setSelectedProduct(event.target.value);
   };
 
-
-
-  // const saveCompra = (e) => {
-  //   e.preventDefault();
-  //   let data = new FormData();
-  //   data.append("total", total);
-  //   data.append("tax", tax);
-  //   fetch("http://localhost/routes/product.php", {
-  //     method: "POST",
-  //     body: data,
-  //   }).then(readCompra());
-  //   window.location.reload();
-  // };
-
   useEffect(() => {
     readCompra();
     fetch("http://localhost/routes/product.php")
@@ -85,19 +70,80 @@ const Compra = () => {
       .then((val) => setValues(val));
   }, []);
 
+  const showTotal = () => {
+    let sumTax = 0;
+    let sumPrice = 0;
+
+    carrinhoTemporario.forEach((compra) => {
+      sumTax += parseFloat(compra.tax);
+      sumPrice += parseFloat(compra.total);
+    });
+
+    setProductData({
+      sumTax: sumTax,
+      sumPrice: sumPrice,
+      
+    });
+    
+  };
+
+
+  const saveCompra = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost/routes/product.php");
+    const dbProduct = await response.json();
+    const product = dbProduct.find((p) => String(p.code) === selectedProduct);
+    const tax_value = product.tax_value;
+    const price = product.price;
+
+    const totalTax = (tax_value * price * amount) / 100;
+    const totalPrice = price * amount;
+    const totalValue = totalPrice + totalTax;
+    const existingProduct = carrinhoTemporario.find(
+      (item) => item.code === product.code
+    );
+
+    if (!existingProduct) {
+      if (amount <= product.amount) {
+        const compra = {
+          code: product.code,
+          name: product.name,
+          price: totalPrice,
+          tax: totalTax,
+          amount: amount,
+          total: totalValue,
+        };
+
+        carrinhoTemporario.push(compra);
+        showTotal();
+      } else {
+        alert(
+          `Sem estoque suficiente para essa quantidade! Digite um valor menor que ${product.amount}!`
+        );
+      }
+    } else {
+      alert("Este produto foi adicionado ao carrinho anteriormente.");
+    }
+  };
+
+  const deletarCompra = (id) => {
+   const newCarrinhoTemporario = carrinhoTemporario.filter((item) => item.code !==id);
+   if(window.confirm('Deseja apagar esse produto?'))
+   setCarrinhoTemporario(newCarrinhoTemporario);
+  }
+  
   return (
     <>
       <NavBar />
       <div className="teste">
         <div className="teste container justify-content-center row d-flex">
           <div className="col-6">
-            <Form>
+            <Form onSubmit={saveCompra}>
               <Form.Select
                 className="select w-100 m-3"
                 aria-label="Default select example"
-                value={products}
+                value={selectedProduct}
                 onChange={changeProduct}
-               
               >
                 <option>Selecione um produto</option>
                 {values.map((opts, i) => (
@@ -111,7 +157,8 @@ const Compra = () => {
                   className="m-3"
                   id="amount"
                   size="md"
-                  type="text"
+                  type="number"
+                  min="1"
                   placeholder="Amount"
                   value={amount}
                   onChange={changeAmount}
@@ -139,7 +186,7 @@ const Compra = () => {
               <Button
                 className="inputSalvar m-3"
                 as="input"
-                type="button"
+                type="submit"
                 value="Adicionar"
               />{" "}
             </Form>
@@ -152,66 +199,40 @@ const Compra = () => {
                   <th>Produto</th>
                   <th>Quantidade</th>
                   <th>Preço</th>
+                  <th>Tax</th>
+                  <th>Total</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Maça</td>
-                  <td>100</td>
-                  <td>2</td>
-                  <td>
-                    {" "}
-                    <button
-                      type="button "
-                      className="btn btn-danger btn-sm"
-                      size="sm"
-                    >
-                      Deletar
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Tv</td>
-                  <td>50</td>
-                  <td>300</td>
-                  <td>
-                    {" "}
-                    <button
-                      type="button "
-                      className="btn btn-danger btn-sm"
-                      size="sm"
-                    >
-                      Deletar
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Polly</td>
-                  <td>70</td>
-                  <td>29</td>
-                  <td>
-                    {" "}
-                    <button
-                      type="button "
-                      className="btn btn-danger btn-sm"
-                      size="sm"
-                    >
-                      Deletar
-                    </button>
-                  </td>
-                </tr>
+                {carrinhoTemporario?.map((compra) => (
+                  <tr key={compra.code}>
+                    <td>{compra.code}</td>
+                    <td>{compra.name}</td>
+                    <td>{compra.amount}</td>
+                    <td> {compra.price}</td>
+                    <td> {compra.tax}</td>
+                    <td> {compra.total}</td>
+                    <td>
+                      <button
+                        type="button"
+                        className="btn btn-danger btn-sm"
+                        size="sm"
+                        onClick={() => deletarCompra(compra.code)}
+                      >
+                        Deletar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </Table>
           </div>
         </div>
         <div className="teste ms-4">
           <div className="total col-6 m-5 container justify-content-center">
-            <p className="ms-5">Taxa total:</p>
-            <p className="ms-5">Total do carrinho:</p>
+            <p value={productData.tax} className="ms-5">Taxa total:</p>
+            <p value={productData.price} className="ms-5">Total do carrinho:</p>
 
             <div className="buttonCarrinho col-8 m-5 mt-5">
               <Button
