@@ -24,6 +24,3 @@ function NavBar() {
 }
 
 export default NavBar;
-<style>
-    
-</style>
