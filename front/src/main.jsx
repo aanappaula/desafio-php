@@ -9,7 +9,7 @@ import Home from "./components/pages/Home";
 import Category from "./components/pages/Category";
 import Product from "./components/pages/Product";
 import History from "./components/pages/History";
-import Detail from "./components/pages/Detail";
+// import Detail from "./components/pages/Detail";
 
 const router = createBrowserRouter([
   {
@@ -28,10 +28,10 @@ const router = createBrowserRouter([
     path: "/history",
     element: <History />,
   },
-  {
-    path: "/detail",
-    element: <Detail />,
-  },
+  // {
+  //   path: "/detail",
+  //   element: <Detail />,
+  // },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

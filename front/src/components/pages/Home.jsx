@@ -49,6 +49,17 @@ const Compra = () => {
 
   };
 
+  const readItem = async () => {
+    try {
+      const response = await fetch("http://localhost/routes/orderItem.php");
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Erro ao ler itens da ordem:", error);
+      return [];
+    }
+  };
+
   useEffect(() => {
     readCompra();
     fetch("http://localhost/routes/product.php")
@@ -72,13 +83,13 @@ const Compra = () => {
       .then((val) => setValues(val));
   }, []);
 
-  function changeTax() {
+  function atualizaTax() {
     carrinhoTemporario.forEach((item) => {
       sumTax += item.tax;
     });
   }
 
-  function changePrice() {
+  function atualizaPrice() {
     carrinhoTemporario.forEach((item) => {
       sumPrice += item.total;
     });
@@ -127,13 +138,73 @@ const Compra = () => {
    setCarrinhoTemporario(newCarrinhoTemporario);
   }
   
-  changePrice();
-  changeTax();
+
+  const finalizarCompra = async () => {
+      let sumPrice = 0;
+      let sumTax = 0;
+  
+      if (carrinhoTemporario.length > 0) {
+        carrinhoTemporario.forEach(product => {
+          sumTax += parseFloat(product.tax);
+          sumPrice += parseFloat(product.price);
+        });
+  
+        const response = window.confirm("Deseja finalizar sua compra?");
+        if (response) {
+          try {
+            const orderResponse = await fetch("http://localhost/routes/orders.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: new URLSearchParams({
+                total: sumPrice,
+                tax: sumTax,
+              }),
+            });
+  
+            const { code } = await orderResponse.json();
+  
+            await Promise.all(carrinhoTemporario.map(async product => {
+              let produto = new FormData();
+              produto.append("order_code", parseInt(code));
+              produto.append("product_code", product.code);
+              produto.append("amount", product.amount);
+              produto.append("tax", product.tax);
+              produto.append("price", product.price);
+  
+              return fetch("http://localhost/routes/orderItem.php", {
+                method: "POST",
+                body: produto,
+              });
+            }));
+  
+            setCarrinhoTemporario([]);
+            window.location.reload();
+          } catch (error) {
+            console.error("Erro ao finalizar a compra: ", error);
+            alert("Deu erro");
+          }
+        }
+      }
+    };
+
+    const cancelCompra = () => {
+      const response = confirm("Deseja realmente cancelar o seu carrinho?");
+      if (response);
+      window.location.reload();
+    
+    };
+    
+
+
+  atualizaPrice();
+  atualizaTax();
 
   return (
     <>
       <NavBar />
-      <div className="teste">
+      <div className="teste ">
         <div className="teste container justify-content-center row d-flex">
           <div className="col-6">
             <Form onSubmit={saveCompra}>
@@ -227,8 +298,9 @@ const Compra = () => {
             </Table>
           </div>
         </div>
-        <div className="totais  ms-5">
-          <div className="total col-2 m-5 container justify-content-center">
+
+        <div className="totais ms-5 ">
+          <div className="total col-2 m-5 me-5 position-absolute bottom-0 end-0">
           <input
                 type="text"
                 name=""
@@ -249,19 +321,9 @@ const Compra = () => {
                 disabled
                 readOnly
               />
-            <div className="buttonCarrinho col-8 m-5 mt-5">
-              <Button
-                className="inputCancel btn-secondary"
-                as="input"
-                type="button"
-                value="Cancel"
-              />{" "}
-              <Button
-                className="inputSalvar ms-3"
-                as="input"
-                type="button"
-                value="Finish"
-              />{" "}
+            <div className="buttonCarrinho col-8 mt-5 ">
+            <Button className="btn-secondary" onClick={() =>cancelCompra()} type="button">Cancel</Button>{' '}
+            <Button className="inputFinalizar ms-3" onClick={() =>finalizarCompra()} type="button">Finalizar</Button>{' '}
             </div>
           </div>
         </div>

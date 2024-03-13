@@ -119,6 +119,11 @@
   height: 40px;
 }
 
+.inputFinalizar {
+  background-color: rgba(136, 24, 192, 0.929); 
+}
+
+
 .inputCancel { 
   width: 100%;
   height: 40px;
