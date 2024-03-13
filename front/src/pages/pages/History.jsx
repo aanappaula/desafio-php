@@ -97,6 +97,7 @@ function History() {
                         <th>Código do Produto</th>
                         <th>Quantidade</th>
                         <th>Preço</th>
+                        <th>Taxa</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -106,6 +107,7 @@ function History() {
                               <td>{element.product_code}</td>
                               <td>{element.amount}</td>
                               <td> {element.price}</td>
+                              <td> {element.tax}</td>
                             </tr>
                           ))}
                     </tbody>

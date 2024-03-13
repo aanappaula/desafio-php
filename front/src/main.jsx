@@ -28,10 +28,7 @@ const router = createBrowserRouter([
     path: "/history",
     element: <History />,
   },
-  // {
-  //   path: "/detail",
-  //   element: <Detail />,
-  // },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
