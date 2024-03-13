@@ -46,9 +46,7 @@ const Compra = () => {
         tax: totalTax,
       });
     }
-
   };
-
 
   useEffect(() => {
     readCompra();
@@ -65,13 +63,6 @@ const Compra = () => {
   const changeProduct = (event) => {
     setSelectedProduct(event.target.value);
   };
-
-  useEffect(() => {
-    readCompra();
-    fetch("http://localhost/routes/product.php")
-      .then((data) => data.json())
-      .then((val) => setValues(val));
-  }, []);
 
   function atualizaTax() {
     carrinhoTemporario.forEach((item) => {
@@ -186,8 +177,6 @@ const Compra = () => {
     
     };
     
-
-
   atualizaPrice();
   atualizaTax();
 
@@ -197,6 +186,7 @@ const Compra = () => {
       <div className="teste ">
         <div className="teste container justify-content-center row d-flex">
           <div className="col-6">
+
             <Form onSubmit={saveCompra}>
               <Form.Select
                 className="select w-100 m-3"
@@ -211,9 +201,9 @@ const Compra = () => {
                   </option>
                 ))}
               </Form.Select>
-              <InputGroup className="mb-3">
+              <InputGroup className="ms-3 mb-3">
                 <Form.Control
-                  className="m-3"
+                  className=""
                   id="amount"
                   size="md"
                   type="number"
@@ -224,7 +214,7 @@ const Compra = () => {
                 />
 
                 <Form.Control
-                  className="m-3"
+                  className=""
                   id="price"
                   size="md"
                   type="number"
@@ -233,7 +223,7 @@ const Compra = () => {
                   placeholder="Preço"
                 />
                 <Form.Control
-                  className="m-3"
+                  className=""
                   id="tax"
                   size="md"
                   type="number"
@@ -249,6 +239,7 @@ const Compra = () => {
                 value="Adicionar"
               />{" "}
             </Form>
+            
           </div>
           <div className="col-6">
             <Table className="m-3" responsive="sm" bordered hover size="lg">
@@ -285,7 +276,7 @@ const Compra = () => {
                   </tr>
                 ))}
               </tbody>
-            </Table>
+            </Table> 
           </div>
         </div>
 
@@ -314,7 +305,7 @@ const Compra = () => {
           
             <Button className="btn-secondary" onClick={() =>cancelCompra()} type="button">Cancel</Button>{' '}
             <Button className="inputFinalizar ms-3" onClick={() =>finalizarCompra()} type="button">Finalizar</Button>{' '}
-          </div>
+          </div> 
         </div>
       </div>
     </>
