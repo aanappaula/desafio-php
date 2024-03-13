@@ -67,8 +67,17 @@
     }
   }
    */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 .navbar {
   background-color: rgba(136, 24, 192, 0.929);
+  justify-content: space-between;
+ position: relative;
+ display: flex;
 }
 
 .links {
@@ -143,8 +152,9 @@
 }
 
 .totais {
-  margin: 0 auto;
-  padding-left: 40px;
+  margin: 5px;
+  /* margin: 0 auto;
+  padding-left: 90px; */
 
 }
 

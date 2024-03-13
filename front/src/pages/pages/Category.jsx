@@ -3,6 +3,7 @@ import NavBar from "../../navbar/navbar";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import Container from 'react-bootstrap/Container';
 
 
 const Category = () => {
@@ -58,6 +59,7 @@ const saveCategory = (e) => {
   return (
     <>
       <NavBar />
+      <Container>
       <div className="teste">
         <div className="teste container  justify-content-center row d-flex">
           <div className="col-6">
@@ -128,6 +130,7 @@ const saveCategory = (e) => {
           </div>
         </div>
       </div>
+      </Container>
     </>
   );
 };

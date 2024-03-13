@@ -3,6 +3,7 @@ import NavBar from "../../navbar/navbar";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import Container from 'react-bootstrap/Container';
 import axios from "axios";
 
 
@@ -62,6 +63,7 @@ const Product = () => {
   return (
     <>
       <NavBar />
+      <Container>
       <div className="teste">
         <div className="teste container  justify-content-center row d-flex">
           <div className="col-6">
@@ -126,7 +128,7 @@ const Product = () => {
           </div>
 
           <div className="col-6">
-            <Table className="m-3" bordered hover size="lg" responsive="sm">
+            <Table className="m-3" size="lg" bordered hover responsive="sm" >
               <thead>
                 <tr>
                   <th>Código</th>
@@ -160,6 +162,7 @@ const Product = () => {
           </div>
         </div>
       </div>
+      </Container>
     </>
   );
 }

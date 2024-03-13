@@ -49,16 +49,6 @@ const Compra = () => {
 
   };
 
-  const readItem = async () => {
-    try {
-      const response = await fetch("http://localhost/routes/orderItem.php");
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Erro ao ler itens da ordem:", error);
-      return [];
-    }
-  };
 
   useEffect(() => {
     readCompra();
@@ -299,7 +289,7 @@ const Compra = () => {
           </div>
         </div>
 
-        <div className="totais ms-5 ">
+        <div className="totais ms-5 m-3">
           <div className="total col-2 m-5 me-5 position-absolute bottom-0 end-0">
           <input
                 type="text"
@@ -321,10 +311,9 @@ const Compra = () => {
                 disabled
                 readOnly
               />
-            <div className="buttonCarrinho col-8 mt-5 ">
+          
             <Button className="btn-secondary" onClick={() =>cancelCompra()} type="button">Cancel</Button>{' '}
             <Button className="inputFinalizar ms-3" onClick={() =>finalizarCompra()} type="button">Finalizar</Button>{' '}
-            </div>
           </div>
         </div>
       </div>
