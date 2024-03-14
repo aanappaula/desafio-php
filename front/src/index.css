@@ -12,10 +12,10 @@
   left: 0;
   width: 0;
   height: 100%;
-  border-right: 4px solid #17FEFF;
+  border-right: 4px solid #ffffff;
   overflow: hidden;
   color: #ffffff;
-  animation: load91371 2s linear infinite;
+  animation: load91371 10s linear infinite;
 }
 
 @keyframes load91371 {
@@ -28,13 +28,51 @@
   }
 
   11%,21%,31%,41%,51%,61%,71%,81%,91% {
-    border-right-color: #17FEFF;
+    border-right-color: #ffffff;
   }
 
   60%, 80% {
     width: 100%;
   }
 }
+
+/* CSS do LogOut */
+
+.logOut {
+  height: 40px;
+  width: 150px;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: Helvetica,"sans-serif";
+  transition: all .2s;
+  padding: 10px 20px;
+  border-radius: 100px;
+  background: #ffffff;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+
+button:hover {
+  background: #e0e0e0;
+}
+
+button > svg {
+  width: 34px;
+  margin-left: 10px;
+  transition: transform .3s ease-in-out;
+}
+
+button:hover svg {
+  transform: translateX(5px);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+
 
 /* :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

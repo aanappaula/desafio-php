@@ -9,11 +9,16 @@ import Home from "./pages/pages/Home";
 import Category from "./pages/pages/Category";
 import Product from "./pages/pages/Product";
 import History from "./pages/pages/History";
-// import Detail from "./components/pages/Detail";
+import Login from "./components/Login/login";
+
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Login />,
+  },
+  {
+    path: "/home",
     element: <Home />,
   },
   {

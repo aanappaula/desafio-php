@@ -2,6 +2,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
+import LogOut from "../components/Buttons/logOut";
 
 function NavBar() {
   return (
@@ -18,7 +19,7 @@ function NavBar() {
             <NavLink
               className="text-white m-3"
               style={{ textDecoration: "none" }}
-              to="/"
+              to="/home"
             >
               Home
             </NavLink>
@@ -43,6 +44,7 @@ function NavBar() {
             >
               History
             </NavLink>
+           <LogOut/>
           </Nav>
         </Navbar.Collapse>
       </Container>
