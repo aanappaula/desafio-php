@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import ButtonAdc from "../Buttons/adicionar";
 import axios from "axios";
 
 function FormProd() {
-
-    const [products, setProducts] = useState([]);
-    const [values, setValues] = useState([]);
-    const [name, setName] = useState("");
-    const [amount, setAmount] = useState("");
-    const [price, setPrice] = useState("");
-    const [category, setCategory] = useState("");
+  const [setProducts] = useState([]);
+  const [values, setValues] = useState([]);
+  const [name, setName] = useState("");
+  const [amount, setAmount] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
 
   const readProduct = async () => {
     try {
@@ -90,12 +89,7 @@ function FormProd() {
         min="1"
         placeholder="Preço"
       />
-      <Button
-        className="inputSalvar m-3"
-        as="input"
-        type="submit"
-        value="Adicionar"
-      />{" "}
+     <ButtonAdc/>
     </Form>
   );
 }

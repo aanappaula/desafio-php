@@ -1,5 +1,5 @@
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import ButtonAdc from "../Buttons/adicionar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -7,7 +7,6 @@ function FormCat() {
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState([]);
   const [tax, setTax] = useState([]);
-
 
   useEffect(() => {
     readCategory();
@@ -36,7 +35,7 @@ function FormCat() {
     console.log(categories);
   };
 
-return (
+  return (
     <Form onSubmit={saveCategory}>
       <Form.Control
         className="m-3"
@@ -59,14 +58,9 @@ return (
         value={tax}
         onChange={(e) => setTax(e.target.value)}
       />
-      <Button
-        className="inputSalvar m-3"
-        as="input"
-        type="submit"
-        value="Adicionar"
-      />
+      <ButtonAdc />
     </Form>
-);
+  );
 }
 
 export default FormCat;

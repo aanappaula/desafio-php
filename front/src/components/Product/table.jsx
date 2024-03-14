@@ -4,7 +4,7 @@ import axios from "axios";
 
 function TableProd() {
   const [products, setProducts] = useState([]);
-  const [values, setValues] = useState([]);
+  const [setValues] = useState([]);
 
   const readProduct = async () => {
     try {

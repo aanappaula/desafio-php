@@ -7,8 +7,7 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 
 const Compra = () => {
-  const [compras, setCompras] = useState([]);
-  const [products, setProducts] = useState("");
+  const [setCompras] = useState([]);
   const [values, setValues] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState("");
   const [amount, setAmount] = useState("");

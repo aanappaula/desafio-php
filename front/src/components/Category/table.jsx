@@ -30,35 +30,35 @@ function TableCat() {
     }
   };
   return (
-  <Table className="m-3" bordered hover size="lg" responsive="sm">
-    <thead>
-      <tr>
-        <th>Código</th>
-        <th>Categoria</th>
-        <th>Taxa</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {categories?.map((category) => (
-        <tr key={category.code}>
-          <td>{category.code}</td>
-          <td>{category.name}</td>
-          <td> {category.tax}</td>
-          <td>
-            <button
-              type="button"
-              className="btn btn-danger btn-sm"
-              size="sm"
-              onClick={() => deletarCategory(category.code)}
-            >
-              Deletar
-            </button>
-          </td>
+    <Table className="m-3" bordered hover size="lg" responsive="sm">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Categoria</th>
+          <th>Taxa</th>
+          <th></th>
         </tr>
-      ))}
-    </tbody>
-  </Table>
-  )
-};
+      </thead>
+      <tbody>
+        {categories?.map((category) => (
+          <tr key={category.code}>
+            <td>{category.code}</td>
+            <td>{category.name}</td>
+            <td> {category.tax}</td>
+            <td>
+               <button
+                type="button"
+                className="btn btn-danger btn-sm"
+                size="sm"
+                onClick={() => deletarCategory(category.code)}
+              >
+                Deletar
+              </button> 
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  );
+}
 export default TableCat;
