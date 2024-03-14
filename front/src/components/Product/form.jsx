@@ -4,7 +4,7 @@ import ButtonAdc from "../Buttons/adicionar";
 import axios from "axios";
 
 function FormProd() {
-  const [setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [values, setValues] = useState([]);
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");

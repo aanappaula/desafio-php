@@ -4,10 +4,11 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
+import ButtonCancel from "../../components/Buttons/cancel";
 import axios from "axios";
 
 const Compra = () => {
-  const [setCompras] = useState([]);
+  const [compras, setCompras] = useState([]);
   const [values, setValues] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState("");
   const [amount, setAmount] = useState("");
@@ -35,10 +36,10 @@ const Compra = () => {
     const product = dbProduct.find((p) => String(p.code) === selectedProduct);
 
     if (product) {
-      const taxValue = (product.tax_value) / 100;
+      const taxValue = product.tax_value / 100;
       const productPrice = product.price;
 
-      const totalTax = (taxValue * amount) * 100;
+      const totalTax = taxValue * amount * 100;
       const totalPrice = productPrice * amount;
       setProductData({
         price: totalPrice,
@@ -80,10 +81,10 @@ const Compra = () => {
     const response = await fetch("http://localhost/routes/product.php");
     const dbProduct = await response.json();
     const product = dbProduct.find((p) => String(p.code) === selectedProduct);
-    const tax_value = (product.tax_value) / 100;
+    const tax_value = product.tax_value / 100;
     const price = product.price;
 
-    const totalTax = (tax_value * amount) * 100;
+    const totalTax = tax_value * amount * 100;
     const totalPrice = price * amount;
     const totalValue = totalPrice + totalTax;
     const existingProduct = carrinhoTemporario.find(
@@ -101,7 +102,7 @@ const Compra = () => {
           total: totalValue,
         };
 
-        setCarrinhoTemporario([...carrinhoTemporario, compra])
+        setCarrinhoTemporario([...carrinhoTemporario, compra]);
       } else {
         alert(
           `Sem estoque suficiente para essa quantidade! Digite um valor menor que ${product.amount}!`
@@ -113,26 +114,29 @@ const Compra = () => {
   };
 
   const deletarCompra = (id) => {
-   const newCarrinhoTemporario = carrinhoTemporario.filter((item) => item.code !==id);
-   if(window.confirm('Deseja apagar esse produto?'))
-   setCarrinhoTemporario(newCarrinhoTemporario);
-  }
-  
+    const newCarrinhoTemporario = carrinhoTemporario.filter(
+      (item) => item.code !== id
+    );
+    if (window.confirm("Deseja apagar esse produto?"))
+      setCarrinhoTemporario(newCarrinhoTemporario);
+  };
 
   const finalizarCompra = async () => {
-      let sumPrice = 0;
-      let sumTax = 0;
-  
-      if (carrinhoTemporario.length > 0) {
-        carrinhoTemporario.forEach(product => {
-          sumTax += parseFloat(product.tax);
-          sumPrice += parseFloat(product.price);
-        });
-  
-        const response = window.confirm("Deseja finalizar sua compra?");
-        if (response) {
-          try {
-            const orderResponse = await fetch("http://localhost/routes/orders.php", {
+    let sumPrice = 0;
+    let sumTax = 0;
+
+    if (carrinhoTemporario.length > 0) {
+      carrinhoTemporario.forEach((product) => {
+        sumTax += parseFloat(product.tax);
+        sumPrice += parseFloat(product.price);
+      });
+
+      const response = window.confirm("Deseja finalizar sua compra?");
+      if (response) {
+        try {
+          const orderResponse = await fetch(
+            "http://localhost/routes/orders.php",
+            {
               method: "POST",
               headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -141,41 +145,36 @@ const Compra = () => {
                 total: sumPrice,
                 tax: sumTax,
               }),
-            });
-  
-            const { code } = await orderResponse.json();
-  
-            await Promise.all(carrinhoTemporario.map(async product => {
+            }
+          );
+
+          const { code } = await orderResponse.json();
+
+          await Promise.all(
+            carrinhoTemporario.map(async (product) => {
               let produto = new FormData();
               produto.append("order_code", parseInt(code));
               produto.append("product_code", product.code);
               produto.append("amount", product.amount);
               produto.append("tax", product.tax);
               produto.append("price", product.price);
-  
+
               return fetch("http://localhost/routes/orderItem.php", {
                 method: "POST",
                 body: produto,
               });
-            }));
-  
-            setCarrinhoTemporario([]);
-            window.location.reload();
-          } catch (error) {
-            console.error("Erro ao finalizar a compra: ", error);
-            alert("Deu erro");
-          }
+            })
+          );
+
+          setCarrinhoTemporario([]);
+          window.location.reload();
+        } catch (error) {
+          console.error("Erro ao finalizar a compra: ", error);
+          alert("Deu erro");
         }
       }
-    };
-
-    const cancelCompra = () => {
-      const response = confirm("Deseja realmente cancelar o seu carrinho?");
-      if (response);
-      window.location.reload();
-    
-    };
-    
+    }
+  };
   atualizaPrice();
   atualizaTax();
 
@@ -185,7 +184,6 @@ const Compra = () => {
       <div className="teste ">
         <div className="teste container justify-content-center row d-flex">
           <div className="col-6">
-
             <Form onSubmit={saveCompra}>
               <Form.Select
                 className="select w-100 m-3"
@@ -238,7 +236,6 @@ const Compra = () => {
                 value="Adicionar"
               />{" "}
             </Form>
-            
           </div>
           <div className="col-6">
             <Table className="m-3" responsive="sm" bordered hover size="lg">
@@ -275,36 +272,41 @@ const Compra = () => {
                   </tr>
                 ))}
               </tbody>
-            </Table> 
+            </Table>
           </div>
         </div>
 
         <div className="totais ms-5 m-3">
           <div className="total col-2 m-5 me-5 position-absolute bottom-0 end-0">
-          <input
-                type="text"
-                name=""
-                value={sumTax}
-                id="totaltax"
-                className="form-control mb-3"
-                placeholder="Total Tax"
-                disabled
-                readOnly
-              />
-              <input
-                type="text"
-                name=""
-                value={sumPrice}
-                id="totalprice"
-                className="form-control mb-3"
-                placeholder="Total"
-                disabled
-                readOnly
-              />
-          
-            <Button className="btn-secondary" onClick={() =>cancelCompra()} type="button">Cancel</Button>{' '}
-            <Button className="inputFinalizar ms-3" onClick={() =>finalizarCompra()} type="button">Finalizar</Button>{' '}
-          </div> 
+            <input
+              type="text"
+              name=""
+              value={sumTax}
+              id="totaltax"
+              className="form-control mb-3"
+              placeholder="Total Tax"
+              disabled
+              readOnly
+            />
+            <input
+              type="text"
+              name=""
+              value={sumPrice}
+              id="totalprice"
+              className="form-control mb-3"
+              placeholder="Total"
+              disabled
+              readOnly
+            />
+            <ButtonCancel />
+            <Button
+              className="inputFinalizar ms-3"
+              onClick={() => finalizarCompra()}
+              type="button"
+            >
+              Finalizar
+            </Button>{" "}
+          </div>
         </div>
       </div>
     </>

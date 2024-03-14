@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
+// import ButtonDelete from "../Buttons/delete";
 import axios from "axios";
 
 function TableCat() {
@@ -46,14 +47,14 @@ function TableCat() {
             <td>{category.name}</td>
             <td> {category.tax}</td>
             <td>
-               <button
+              <button
                 type="button"
                 className="btn btn-danger btn-sm"
                 size="sm"
                 onClick={() => deletarCategory(category.code)}
               >
                 Deletar
-              </button> 
+              </button>
             </td>
           </tr>
         ))}
