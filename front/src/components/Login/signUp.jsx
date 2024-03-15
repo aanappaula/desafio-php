@@ -1,5 +1,5 @@
 import styles from "./signUp.module.css";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -49,37 +49,36 @@ function SignUp() {
         <label>
           <input
             required=""
-            placeholder=""
+            placeholder="username"
             type="text"
             className={styles.input}
             value={username}
             onChange={(e) => setUserName(e.target.value)}
           />
-          <span>Username</span>
         </label>
 
         <label>
           <input
             required=""
-            placeholder=""
+            placeholder="password"
             type="password"
             className={styles.input}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <span>Password</span>
         </label>
         <button  className={styles.submit}>
           Enviar
         </button>
         <p className={styles.signin}>
           Já tem uma conta?{" "}
-          <NavLink
+          <a
             className="text m-3"
             style={{ textDecoration: "none" }}
-            to="/"
-          />
-          Entre{" "}
+            href="/"
+          >
+            Entre
+            </a>
         </p>
       </form>
     </div>
