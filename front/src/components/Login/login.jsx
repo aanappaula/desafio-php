@@ -1,4 +1,5 @@
 import styles from  "./login.module.css";
+import { NavLink } from "react-router-dom";
 
 function Login() {
   return (
@@ -46,7 +47,13 @@ function Login() {
       <button className={styles.button}>Submit</button>
       <div className={styles.signupContainer}>
         <p></p>
-        <a href="#">Sign up</a>
+        <a><NavLink
+              className="text-white m-3"
+              style={{ textDecoration: "none" }}
+              to="/signup"
+            /></a>
+
+        {/* <a href="#">Sign up</a> */}
       </div>
     </form>
     </div>

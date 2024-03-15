@@ -1,7 +1,14 @@
+import { NavLink } from "react-router-dom";
 
 function LogOut() {
   return (
     <button className="logOut position-absolute top-0 end-0 mt-3 me-3">
+      <a><NavLink
+        className="text-white m-3"
+        style={{ textDecoration: "none" }}
+        to="/"
+      /></a>
+
       <span>Log Out</span>
       <svg
         width="34"
@@ -24,7 +31,6 @@ function LogOut() {
       </svg>
     </button>
   );
- 
 }
 
 export default LogOut;

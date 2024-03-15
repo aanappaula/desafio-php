@@ -10,12 +10,17 @@ import Category from "./pages/pages/Category";
 import Product from "./pages/pages/Product";
 import History from "./pages/pages/History";
 import Login from "./components/Login/login";
+import SignUp from "./components/Login/signUp";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
   },
   {
     path: "/home",
