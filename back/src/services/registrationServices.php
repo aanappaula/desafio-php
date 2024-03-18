@@ -8,6 +8,18 @@ function createUsers(String $username, String $pass) {
     return "criado com sucesso!";
 };
  
+
+function Login(String $username, String $pass) {
+    $login = myPDO->query("SELECT * FROM users where username='{$username}'");
+    $data = $login->fetch(PDO::FETCH_ASSOC);
+    if($data){
+        if(password_verify($pass, $data["pass"])){
+            return array("code" => $data["code"], "username" => $data["username"]);
+        }
+    }
+    return array('error' => "to aqui");
+}
+
 function deleteUsers(Int $id) {
     $createQuery = myPDO->prepare("delete from users where code={$id}");
     $createQuery->execute();

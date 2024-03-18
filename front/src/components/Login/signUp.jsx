@@ -2,11 +2,13 @@ import styles from "./signUp.module.css";
 // import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
   const [users, setUsers] = useState([]);
   const [username, setUserName] = useState([]);
   const [password, setPassword] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     readUsers();
@@ -34,7 +36,7 @@ function SignUp() {
       body: data,
     });
     alert("Conta criado com sucesso!")
-    window.location.reload();
+    navigate("/home")
     console.log(users); 
   }; 
 
@@ -67,7 +69,14 @@ function SignUp() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <button  className={styles.submit}>
+        <button  to="/home "className={styles.submit}>
+        <a
+            className="text m-3"
+            style={{ textDecoration: "none" }}
+            href="/home"
+          >
+            </a>
+        
           Enviar
         </button>
         <p className={styles.signin}>

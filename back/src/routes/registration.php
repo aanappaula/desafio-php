@@ -8,7 +8,6 @@ header ('Access-Control-Allow-Credentials: true');
 include "../services/registrationServices.php";
  
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    echo 'Criar user <br/>';
  
     $username = filter_var($_POST["user_name"], FILTER_SANITIZE_SPECIAL_CHARS);
     $pass = filter_var($_POST["password"]);
